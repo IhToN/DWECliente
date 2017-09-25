@@ -1,7 +1,7 @@
 // ej3
 var radius = window.prompt("Introduce el radio de un círculo");
 console.log("The circumference is " + (2 * Math.PI * radius));
-console.log("The area is " + (Math.PI * (radius ^ 2)));
+console.log("The area is " + (Math.PI * Math.pow(radius, 2)));
 
 // ej4
 var celsius = window.prompt("Introduce la temperatura en Celsius");
