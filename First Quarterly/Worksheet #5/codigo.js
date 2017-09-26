@@ -9,24 +9,24 @@ document.write("<br /><h1>Práctica del bucle for</h1>");
 cabeceras();
 
 // ej4.11
-function pintarTabla(blanca) {
+function pintarArray(blanca) {
     let col = window.prompt("Introduce el número de columnas");
     let anc = window.prompt("Introduce el ancho de las celdas");
     let alt = window.prompt("Introduce el alto de las celdas");
-    if (!Number.isInteger(col) || !Number.isInteger(anc) || !Number.isInteger(alt)) {
+    if (isNaN(col) || isNaN(anc) || isNaN(alt)) {
         document.write("Has introducido algún valor incorrecto:<br /><ul>" +
-            "<li>Nº Columnas: " + col + "</li>" +
-            "<li>Ancho Columnas: " + anc + "</li>" +
-            "<li>Alto Columnas: " + alt + "</li></ul>");
+            "<li>Nº Columnas: " + col + " - " + isNaN(col) + "</li>" +
+            "<li>Ancho Columnas: " + anc + " - " + isNaN(col) + "</li>" +
+            "<li>Alto Columnas: " + alt + " - " + isNaN(col) + "</li></ul>");
         return;
     }
     if (blanca)
-        pintarTablaBlanca(col, anc, alt);
+        pintarArrayBlanco(col, anc, alt);
     else
-        pintarTablaBlancaNegra(col, anc, alt);
+        pintarArrayBlancoNegro(col, anc, alt);
 }
 
-function pintarTablaBlanca(columnas, ancho, alto) {
+function pintarArrayBlanco(columnas, ancho, alto) {
     document.write("<table border='0' cellspacing='2' bgcolor='black' width='\"+(ancho * columnas)+\"'>");
     document.write("<tr bgcolor='white'>");
     for (let i = 1; i <= columnas; i++)
@@ -36,10 +36,10 @@ function pintarTablaBlanca(columnas, ancho, alto) {
 }
 
 document.write("<br /><h1>Práctica de la Tabla</h1>");
-pintarTabla(true);
+pintarArray(true);
 
 // ej4.12
-function pintarTablaBlancaNegra(columnas, ancho, alto) {
+function pintarArrayBlancoNegro(columnas, ancho, alto) {
     document.write("<table border='0' cellspacing='2' bgcolor='black' width='" + (ancho * columnas) + "'>");
     document.write("<tr bgcolor='white'>");
     for (let i = 1; i <= columnas; i++)
@@ -49,14 +49,14 @@ function pintarTablaBlancaNegra(columnas, ancho, alto) {
 }
 
 document.write("<br /><h1>Práctica de la Tabla en Blanco y Negro</h1>");
-pintarTabla(false);
+pintarArray(false);
 
 // ej4.13
-function pintarTablaWhile(blanca) {
+function pintarArrayWhile(blanca) {
     let col = window.prompt("Introduce el número de columnas");
     let anc = window.prompt("Introduce el ancho de las celdas");
     let alt = window.prompt("Introduce el alto de las celdas");
-    if (!Number.isInteger(col) || !Number.isInteger(anc) || !Number.isInteger(alt)) {
+    if (isNaN(col) || isNaN(anc) || isNaN(alt)) {
         document.write("Has introducido algún valor incorrecto:<br /><ul>" +
             "<li>Nº Columnas: " + col + "</li>" +
             "<li>Ancho Columnas: " + anc + "</li>" +
@@ -64,12 +64,12 @@ function pintarTablaWhile(blanca) {
         return;
     }
     if (blanca)
-        pintarTablaBlancaWhile(col, anc, alt);
+        pintarArrayBlancoWhile(col, anc, alt);
     else
-        pintarTablaBlancaNegraWhile(col, anc, alt);
+        pintarArrayBlancoNegroWhile(col, anc, alt);
 }
 
-function pintarTablaBlancaWhile(columnas, ancho, alto) {
+function pintarArrayBlancoWhile(columnas, ancho, alto) {
     document.write("<table border='0' cellspacing='2' bgcolor='black' width='\"+(ancho * columnas)+\"'>");
     document.write("<tr bgcolor='white'>");
     let i = 1;
@@ -82,10 +82,10 @@ function pintarTablaBlancaWhile(columnas, ancho, alto) {
 }
 
 document.write("<br /><h1>Práctica de la Tabla - While</h1>");
-pintarTablaWhile(true);
+pintarArrayWhile(true);
 
 // ej4.14
-function pintarTablaBlancaNegraWhile(columnas, ancho, alto) {
+function pintarArrayBlancoNegroWhile(columnas, ancho, alto) {
     document.write("<table border='0' cellspacing='2' bgcolor='black' width='" + (ancho * columnas) + "'>");
     document.write("<tr bgcolor='white'>");
     let i = 1;
@@ -98,7 +98,7 @@ function pintarTablaBlancaNegraWhile(columnas, ancho, alto) {
 }
 
 document.write("<br /><h1>Práctica de la Tabla en Blanco y Negro - While</h1>");
-pintarTablaWhile(false);
+pintarArrayWhile(false);
 
 // ej4.15
 function checkNum(num_adivinar, num) {
@@ -135,3 +135,72 @@ function adivinarNumDoWhile() {
 document.write("<br /><h1>Práctica de Adivinación de un Número - Do..While</h1>");
 adivinarNumDoWhile();
 
+// ej4.17
+function tablasDeMultiplicar() {
+    for (let i = 1; i <= 10; i++) {
+        document.write("<h2>Tabla del " + i + "</h2>");
+        for (let j = 0; j <= 10; j++) {
+            document.write(i + "x" + j + "=" + i * j + "<br />");
+        }
+    }
+}
+
+document.write("<br /><h1>Práctica de Tablas de Multiplicar</h1>");
+tablasDeMultiplicar();
+
+// ej4.18
+function pintarTabla() {
+    let col = window.prompt("Introduce el número de columnas");
+    let fil = window.prompt("Introduce el número de filas");
+    let anc = window.prompt("Introduce el ancho de las celdas");
+    let alt = window.prompt("Introduce el alto de las celdas");
+    if (isNaN(col) || isNaN(fil) || isNaN(anc) || isNaN(alt)) {
+        document.write("Has introducido algún valor incorrecto:<br /><ul>" +
+            "<li>Nº Columnas: " + col + "</li>" +
+            "<li>Nº Filas: " + fil + "</li>" +
+            "<li>Ancho Columnas: " + anc + "</li>" +
+            "<li>Alto Columnas: " + alt + "</li></ul>");
+        return;
+    }
+    pintarTablaBlanca(col, fil, anc, alt);
+}
+
+function pintarTablaBlanca(col, fil, anc, alt) {
+    document.write("<table border='0' cellspacing='2' bgcolor='black' width='" + (anc * col) + "'>");
+
+    for (let i = 1; i <= fil; i++) {
+        document.write("<tr bgcolor='white'>");
+        for (let j = 1; j <= col; j++) document.write("<td width='" + anc + "' height='" + alt + "'>&nbsp;</td>");
+        document.write("</tr>");
+    }
+    document.write("</table>");
+}
+
+document.write("<br /><h1>Práctica de Tablas - Filas y Columnas</h1>");
+pintarTabla();
+
+// ej4.19
+function pintarAjedrez() {
+    let anc = window.prompt("Introduce el ancho de las celdas");
+    if (isNaN(anc)) {
+        document.write("Has introducido algún valor incorrecto:<br /><ul>" +
+            "<li>Ancho Columnas: " + anc + "</li>");
+        return;
+    }
+    pintarTablaAjedrez(anc);
+}
+
+function pintarTablaAjedrez(anc) {
+    document.write("<table border='0' cellspacing='2' bgcolor='black' width='" + (anc * 8) + "'>");
+
+    for (let i = 1; i <= 8; i++) {
+        document.write("<tr bgcolor='white'>");
+        for (let j = 1; j <= 8; j++) document.write("<td width='" + anc + "' height='" + anc + "'" +
+            " bgcolor='" + ((i % 2 !== j % 2) ? 'white' : 'black') + "'>&nbsp;</td>");
+        document.write("</tr>");
+    }
+    document.write("</table>");
+}
+
+document.write("<br /><h1>Práctica de Tablas - Filas y Columnas</h1>");
+pintarAjedrez();
