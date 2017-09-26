@@ -1,6 +1,6 @@
 // ej4.10
 function cabeceras() {
-    for (var i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 6; i++) {
         document.write("<h" + i + ">Cabecera h" + i + "</h" + i + ">");
     }
 }
@@ -29,7 +29,7 @@ function pintarTabla(blanca) {
 function pintarTablaBlanca(columnas, ancho, alto) {
     document.write("<table border='0' cellspacing='2' bgcolor='black' width='\"+(ancho * columnas)+\"'>");
     document.write("<tr bgcolor='white'>");
-    for (var i = 1; i <= columnas; i++)
+    for (let i = 1; i <= columnas; i++)
         document.write("<td width='" + ancho + "' height='" + alto + "'>&nbsp;</td>")
     document.write("</tr>");
     document.write("</table>");
@@ -42,7 +42,7 @@ pintarTabla(true);
 function pintarTablaBlancaNegra(columnas, ancho, alto) {
     document.write("<table border='0' cellspacing='2' bgcolor='black' width='" + (ancho * columnas) + "'>");
     document.write("<tr bgcolor='white'>");
-    for (var i = 1; i <= columnas; i++)
+    for (let i = 1; i <= columnas; i++)
         document.write("<td width='" + ancho + "' height='" + alto + "' bgcolor='" + ((i % 2 === 0) ? 'white' : 'black') + "'>&nbsp;</td>")
     document.write("</tr>");
     document.write("</table>");
