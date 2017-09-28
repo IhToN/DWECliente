@@ -196,7 +196,7 @@ function pintarTablaAjedrez(anc) {
     for (let i = 1; i <= 8; i++) {
         document.write("<tr bgcolor='white'>");
         for (let j = 1; j <= 8; j++) document.write("<td width='" + anc + "' height='" + anc + "'" +
-            " bgcolor='" + ((i % 2 !== j % 2) ? 'white' : 'black') + "'>&nbsp;</td>");
+            " bgcolor='" + ((i % 2 === j % 2) ? 'white' : 'black') + "'>&nbsp;</td>");
         document.write("</tr>");
     }
     document.write("</table>");
