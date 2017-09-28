@@ -109,10 +109,10 @@ function checkNum(num_adivinar, num) {
 }
 
 function adivinarNum() {
-    let num_adivinar = window.prompt("[Jugador 1] Introduce el número que quieres que adivinen.");
+    let num_adivinar = parseInt(window.prompt("[Jugador 1] Introduce el número que quieres que adivinen."));
     let num = undefined;
     while (num !== num_adivinar) {
-        num = window.prompt("[Jugador 2] Introduce un número. ¿Será el mismo?");
+        num = parseInt(window.prompt("[Jugador 2] Introduce un número. ¿Será el mismo?"));
         checkNum(num_adivinar, num);
     }
     alert("¡Felicidades! ¡Has acertado el número!");
@@ -123,10 +123,10 @@ adivinarNum();
 
 // ej4.16
 function adivinarNumDoWhile() {
-    let num_adivinar = window.prompt("[Jugador 1] Introduce el número que quieres que adivinen.");
+    let num_adivinar = parseInt(window.prompt("[Jugador 1] Introduce el número que quieres que adivinen."));
     let num = undefined;
     do {
-        num = window.prompt("[Jugador 2] Introduce un número. ¿Será el mismo?");
+        num = parseInt(window.prompt("[Jugador 2] Introduce un número. ¿Será el mismo?"));
         checkNum(num_adivinar, num);
     } while (num !== num_adivinar);
     alert("¡Felicidades! ¡Has acertado el número!");
