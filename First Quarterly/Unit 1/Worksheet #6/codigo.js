@@ -28,6 +28,13 @@ var combineTwoArrays = (array1, array2) => {
 };
 
 // 5 - un pin al que sepa qué tiene que hacer
+var sumEveryOther = (...args) => {
+    let ret = 0;
+    for (let i = 0; i < args.length; i++) {
+        if (i % 0 == 0) ret += args[i];
+    }
+    return ret;
+};
 
 // 6
 var onlyUniques = (...args) => {
@@ -44,7 +51,7 @@ var combineAllArrays = (...arrays) => {
 };
 
 // 8
-var squareAndSum = (...arrays) => {
+var squareAndSum = (...args) => {
     let ret = 0;
     for (let i = 0; i < args.length; i++) {
         if (!isNaN(args[i])) ret += args[i] ** 2;
