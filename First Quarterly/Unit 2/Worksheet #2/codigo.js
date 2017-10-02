@@ -4,18 +4,18 @@ console.log(Math.floor(Math.random() * (200 - 100)) + 100);
 
 var getRandom = (min, max) => {
     min = Math.ceil(min);
-    max = Math.floor(max+1);
+    max = Math.floor(max + 1);
     return Math.floor(Math.random() * (max - min)) + min;
 };
 console.log(getRandom(1000, 2000));
 
 // 5
 var funcionSegundoGrado = (a, b, c) => {
-    let sol1 = parseFloat(-b + (Math.sqrt((b ** 2) - 4 * a * c)) / (2 * a));
-    let sol2 = parseFloat(-b - (Math.sqrt((b ** 2) - 4 * a * c)) / (2 * a));
+    let sol1 = parseFloat((-b + (Math.sqrt((b ** 2) - (4 * a * c)))) / (2 * a));
+    let sol2 = parseFloat((-b - (Math.sqrt((b ** 2) - (4 * a * c)))) / (2 * a));
     return [sol1, sol2];
 };
-console.log(funcionSegundoGrado(3, 4, 5));
+console.log(funcionSegundoGrado(1, -5, 6));
 
 // 7
 var senosHasta = (numero) => {
@@ -23,7 +23,7 @@ var senosHasta = (numero) => {
     for (let i = 0; i <= numero; i++) {
         document.write("<tr>");
         document.write("<td>" + i + "</td>");
-        document.write("<td>" + Math.sin(i * (180 / Math.PI)) + "</td>");
+        document.write("<td>" + Math.sin(i * Math.PI / 180) + "</td>");
         document.write("</tr>");
     }
     document.write("</table>");
