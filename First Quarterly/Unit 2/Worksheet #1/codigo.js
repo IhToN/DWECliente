@@ -40,7 +40,7 @@ var counter = 60;
 var downCount = () => {
     if (counter == 0) {
         document.write("VAGINA!!")
-        window.clearTimeout();
+        window.clearTimeout(0);
     }
     else {
         setTimeout(downCount, 1000);
@@ -54,7 +54,15 @@ downCount();
 // 5
 var reloj = () => {
     let fechaHoy = new Date();
-    console.log(fechaHoy.getHours() + ":" + fechaHoy.getMinutes() + ":" + fechaHoy.getSeconds());
+
+    let hours = fechaHoy.getHours();
+    if(hours < 10) hours = "0" + hours;
+    let minutes = fechaHoy.getMinutes();
+    if(minutes < 10) minutes = "0" + minutes;
+    let seconds = fechaHoy.getSeconds();
+    if(seconds < 10) seconds = "0" + seconds;
+
+    console.log(hours + ":" + minutes + ":" + seconds);
     setTimeout(reloj, 1000);
 };
 document.write("<h1>Testeo de Reloj - Revisa la consola</h1>");
