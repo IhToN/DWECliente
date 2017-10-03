@@ -78,6 +78,7 @@ var tablaPalabra = (cad_arg) => {
         document.write(`<td>${cad_arg[cad_arg.length - i - 1]}</td>`);
         document.write("</tr>");
     }
+
     document.write("<tr>");
     for (char of invierteCadena(cad_arg)) document.write(`<td>${char}</td>`);
     document.write("</tr>");
