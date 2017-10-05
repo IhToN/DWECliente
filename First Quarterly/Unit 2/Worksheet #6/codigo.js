@@ -7,7 +7,7 @@ console.log("Cantidad de Imágenes: " + nImagenes());
 
 var firstImageId = () => {
     let elem = document.images.item(0);
-    if (elem != null && elem.id != undefined) return elem.id;
+    if (elem !== null && elem.id !== undefined) return elem.id;
     return "none";
 };
 console.log("ID de la Primera Imagen: " + firstImageId());
