@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Worksheet #7</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<pre>
+The geolocation API allows the user to provide their location to web applications if they so desire. For privacy reasons, the user is asked for permission to report location information.
+
+The geolocation API is published through the navigator.geolocation object. If the object exists, geolocation services are available.
+
+    Develop a web app in which:
+        Test if geolocation is available.
+        If it's available, show the current position (latitude and longitude)
+        If it isn't available, show a message for each and everyone of the possible errors.
+        Improve your code so you show the position continuously (although the user could be in moving, so it could change)
+        Find the way to measure the distance traveled.
+
+    Let's try to use the geolocation information with the API of Google Maps.
+        Use a map to show your location
+        Draw a marker in your location
+        Find a way to know the address of your location (reverse geocoding).
+
+    OPTIONAL. Complete exercise 2 with these new features:
+        Look for the way to animate your marker
+        Draw the position of the user correctly although it could be moving.
+        Draw the route of the user over the map.
+</pre>
+
+<div id="map"></div>
+
+<script type="text/javascript" src="codigo.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYVRq9Jr-fG87_E6fXmf4GN9ysP-0jv3g&callback=gmapApi"></script>
+</body>
+</html>
