@@ -31,7 +31,7 @@ var combineTwoArrays = (array1, array2) => {
 var sumEveryOther = (...args) => {
     let ret = 0;
     for (let i = 0; i < args.length; i++) {
-        if (i % 0 == 0) ret += args[i];
+        if (i % 2 === 0) ret += args[i];
     }
     return ret;
 };
