@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Worksheet #8</title>
+    <style>
+        #webcam {
+            height: 400px;
+            width: 100%;
+        }
+        #videoElement {
+            display: block;
+            width: 98%;
+            height: 98%;
+            background-color: #666;
+            margin: 0 auto;
+        }
+        #audioElement {
+            display: block;
+            width: 98%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<pre>
+    1. Captura video mediante tu webcam y muestralo en la web
+    2. Realiza lo mismo pero ahora sólo para el audio
+</pre>
+
+<div id="webcam">
+    <video autoplay id="videoElement"></video>
+
+    <audio autoplay controls id="audioElement"></audio>
+</div>
+
+<script type="text/javascript" src="codigo.js"></script>
+</body>
+</html>
