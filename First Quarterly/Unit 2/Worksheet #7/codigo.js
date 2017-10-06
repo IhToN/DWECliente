@@ -34,7 +34,10 @@ var exerOne = () => {
 exerOne();
 
 // 2
+var map;
 var marker;
+var routePath;
+var routeCoords = [];
 
 var geocodeLatLng = (geocoder, map, infowindow, coords) => {
     var latlng = {lat: coords.latitude, lng: coords.longitude};
@@ -54,10 +57,19 @@ var geocodeLatLng = (geocoder, map, infowindow, coords) => {
 
 var drawMap = (position) => {
     var uluru = {lat: position.coords.latitude, lng: position.coords.longitude};
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 16,
         center: uluru
     });
+
+    var geocoder = new google.maps.Geocoder;
+    var infowindow = new google.maps.InfoWindow;
+
+    geocodeLatLng(geocoder, map, infowindow, position.coords);
+    updateMarker(uluru);
+};
+
+var updateMarker = (uluru) => {
     marker = new google.maps.Marker({
         position: uluru,
         map: map,
@@ -66,11 +78,17 @@ var drawMap = (position) => {
     });
 
     marker.addListener('click', toggleBounce);
+}
 
-    var geocoder = new google.maps.Geocoder;
-    var infowindow = new google.maps.InfoWindow;
-
-    geocodeLatLng(geocoder, map, infowindow, position.coords);
+var updateRoute = () => {
+    routePath = new google.maps.Polyline({
+        path: routeCoords,
+        strokeColor: '#0000ff',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+    routePath.setMap(map);
+    marker.position = {lat: position.coords.latitude, lng: position.coords.longitude};
 };
 
 function toggleBounce() {
@@ -85,10 +103,14 @@ var gmapApi = () => {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
             drawMap(position);
+            routeCoords.push({lat: position.coords.latitude, lng: position.coords.longitude});
+            updateRoute();
         });
 
         var watchID = navigator.geolocation.watchPosition(function (position) {
-            marker.position = {lat: position.coords.latitude, lng: position.coords.longitude};
+
+            routeCoords.push({lat: position.coords.latitude, lng: position.coords.longitude});
+            updateRoute();
         });
     } else console.log('Sorry, we couldn\'t get your position.');
 };
