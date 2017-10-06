@@ -12,7 +12,7 @@ var calcDistance = (p1, p2) => { // Points are Geolocation.coords objects
     var d = R * c;
 
     return d.toFixed(3);
-}
+};
 
 var exerOne = () => {
     if ("geolocation" in navigator) {
@@ -41,7 +41,7 @@ var routeCoords = [];
 
 var geocodeLatLng = (geocoder, map, infowindow, coords) => {
     var latlng = {lat: coords.latitude, lng: coords.longitude};
-    geocoder.geocode({'location': latlng}, function(results, status) {
+    geocoder.geocode({'location': latlng}, function (results, status) {
         if (status === 'OK') {
             if (results[1]) {
                 infowindow.setContent(results[1].formatted_address);
@@ -78,7 +78,7 @@ var updateMarker = (uluru) => {
     });
 
     marker.addListener('click', toggleBounce);
-}
+};
 
 var updateRoute = () => {
     routePath = new google.maps.Polyline({
@@ -91,7 +91,7 @@ var updateRoute = () => {
     marker.position = {lat: position.coords.latitude, lng: position.coords.longitude};
 };
 
-function toggleBounce() {
+var toggleBounce = () => {
     if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
     } else {
