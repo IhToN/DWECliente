@@ -1,7 +1,5 @@
 // 1
 var startVideo = () => {
-    var video = document.querySelector("#videoElement");
-
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 
@@ -10,6 +8,7 @@ var startVideo = () => {
     }
 
     function handleVideo(stream) {
+        var video = document.querySelector("#videoElement");
         video.src = window.URL.createObjectURL(stream);
     }
 
@@ -21,8 +20,6 @@ startVideo();
 
 // 2
 var startAudio = () => {
-    var audio = document.querySelector("#audioElement");
-
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 
@@ -34,6 +31,7 @@ var startAudio = () => {
     }
 
     function handleAudio(stream) {
+        var audio = document.querySelector("#audioElement");
         audio.src = window.URL.createObjectURL(stream);
     }
 
