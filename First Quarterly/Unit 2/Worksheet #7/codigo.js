@@ -88,7 +88,7 @@ var updateRoute = () => {
         strokeWeight: 2
     });
     routePath.setMap(map);
-    marker.position = {lat: position.coords.latitude, lng: position.coords.longitude};
+    marker.position = routeCoords[routeCoords.length-1];
 };
 
 var toggleBounce = () => {
@@ -108,7 +108,6 @@ var gmapApi = () => {
         });
 
         var watchID = navigator.geolocation.watchPosition(function (position) {
-
             routeCoords.push({lat: position.coords.latitude, lng: position.coords.longitude});
             updateRoute();
         });
