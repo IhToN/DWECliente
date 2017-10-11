@@ -59,7 +59,7 @@ function muestraPosicionContinua(posicion) {
 
     puntoActual = {lat: lati, lng: long};
     if (puntoAnterior)
-        distancia += calculaDistancia(puntoAnterior, puntoActual);
+        distancia += parseFloat(calculaDistancia(puntoAnterior, puntoActual));
     else
         puntoAnterior = puntoActual;
 
@@ -100,13 +100,16 @@ function muestraPosicionContinua(posicion) {
 
 function calculaDistancia(location1, location2) {
     var R = 6371; // earth's mean radius in km
-    var dLat = toRadianes(location2.latitude - location1.latitude);
-    var dLong = toRadianes(location2.longitude - location1.longitude);
+    var dLat = toRadianes(location2.lat - location1.lng);
+    var dLong = toRadianes(location2.lat - location1.lng);
 
     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRadianes(p1.latitude)) * Math.cos(toRadianes(p2.latitude)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        Math.cos(toRadianes(location1.lat)) * Math.cos(toRadianes(location2.lat)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
+
+    console.log(location1);
+    console.log(location2);
 
     return d.toFixed(3);
 }
