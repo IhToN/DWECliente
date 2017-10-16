@@ -9,7 +9,7 @@ var stats = (nLanzamientos) => {
 };
 
 // 6
-var potencia = (numero, exponente) => exponente == 0 ? 1 : numero * potencia(numero, --exponente);
+var potencia = (base, exponente) => exponente == 1 ? base : base * potencia(base, --exponente);
 
 // 7
 var factorial = (numero) => (numero <= 1) ? 1 : numero * factorial(numero - 1);
