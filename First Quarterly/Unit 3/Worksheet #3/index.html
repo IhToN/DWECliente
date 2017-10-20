@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Worksheet #3</title>
+    <style type="text/css">
+        #bmgrid td {
+            font-family: 'Roboto', sans-serif;
+            border: 1px solid darkgray;
+            background-color: #cacaca;
+            color: purple;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            vertical-align: middle;
+
+            text-shadow: 0 0 1px #000000;
+
+            -moz-box-shadow:    inset 0 0 10px #000000;
+            -webkit-box-shadow: inset 0 0 10px #000000;
+            box-shadow:         inset 0 0 10px #000000;
+        }
+
+        #bmgrid td.not-clicked {
+            -moz-box-shadow:    inset 0 0 1px #000000;
+            -webkit-box-shadow: inset 0 0 1px #000000;
+            box-shadow:         inset 0 0 1px #000000;
+        }
+
+        #bmgrid td[data-mines='1'] {
+            color: blue;
+        }
+        #bmgrid td[data-mines='2'] {
+            color: orange;
+        }
+        #bmgrid td[data-mines='3'] {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<pre>
+4) Buscaminas: Implementa ste juego teniendo en cuenta las siguientes particularidades: é
+    1. El juego consiste en despejar todas las casillas de una pantalla que no oculten una
+    mina.
+    2. Algunas casillas tienen un n mero, este n mero indica las minas que suman todas ú ú
+    las casillas circundantes. As , si una casilla tiene el n mero 3, significa que de las í ú
+    ocho casillas que hay alrededor (si no es en una esquina o borde) hay 3 con minas
+    y 5 sin minas.
+    3. Si se descubre una casilla sin n mero indica que ninguna de las casillas vecinas ú
+    tiene mina y estas se descubren autom ticamente. Si se descubre una casilla con á
+    una mina se pierde la partida.
+    4. El tablero ser de 8x8 con 10 minas. á
+    5. Debe controlarse un tiempo l mite para resolver el juego.
+</pre>
+
+<div id="bmgpcounter"></div>
+<div id="bmgrid"></div>
+
+<script type="text/javascript" src="codigo.js"></script>
+</body>
+</html>
