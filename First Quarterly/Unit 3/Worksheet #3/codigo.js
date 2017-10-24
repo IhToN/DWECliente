@@ -8,6 +8,7 @@ class Casilla {
 
     click() {
         this.clicked = true;
+        this.game.hidden_cells--;
     }
 }
 
@@ -20,6 +21,7 @@ class Vecino extends Casilla {
     click() {
         super.click();
         if (this.nei_mines === 0) this.game.update_neighbour_white(this.x, this.y);
+        this.game.check_win();
         this.game.draw();
     }
 }
@@ -45,6 +47,7 @@ class Mina extends Casilla {
 class BuscaMinas {
     constructor(grid_size = 8, mines_count = 10, gameplay_time = 240) {
         this.grid_size = grid_size;
+        this.hidden_cells = grid_size ** 2;
         if (mines_count <= 0) this.mines_count = 1;
         else if (mines_count >= Math.floor((grid_size ** 2) / 3)) this.mines_count = Math.floor((grid_size ** 2) / 3);
         else this.mines_count = mines_count;
@@ -134,7 +137,7 @@ class BuscaMinas {
                     else if (column instanceof Mina) grid_html += "<td class='mina'>💣</td>";
                     else grid_html += "<td class='" + typeof column + "'></td>";
                 } else {
-                    grid_html += "<td class='not-clicked' data-row='" + column.x + "' data-column='" + column.y + "' onclick='cellClick(this)'></td>";
+                    grid_html += "<td class='not-clicked' data-row='" + column.x + "' data-column='" + column.y + "' onclick='cellClick(this)'>" + (column instanceof Mina && this.ended ? '🚩' : '') + "</td>";
                 }
             });
             grid_html += "</tr>";
@@ -146,7 +149,7 @@ class BuscaMinas {
 
     update_counter() {
         let counter_obj = document.getElementById('bmgpcounter');
-        counter_obj.innerHTML = 'Tiempo restante: ' + this.gameplay_time;
+        counter_obj.innerHTML = 'Tiempo restante: <span class="time">' + this.gameplay_time + '</span> segundo' + (this.gameplay_time > 1 ? 's' : '');
     }
 
     init_game() {
@@ -162,16 +165,20 @@ class BuscaMinas {
         }, 1000)
     }
 
+    check_win() {
+        if (this.hidden_cells === this.mines_count) this.end_game(true);
+    }
+
     end_game(win = false) {
         this.ended = true;
         clearInterval(this.timer);
         let counter_obj = document.getElementById('bmgpcounter');
-        counter_obj.innerHTML = '¡Has ' + (win ? 'ganado' : 'perdido') + '!';
+        counter_obj.innerHTML = '¡Has ' + (win ? '<span class="win">ganado</span>' : '<span class="lose">perdido</span>') + '!';
         this.draw();
     }
 }
 
-const bmgame = new BuscaMinas(8, 10, 240);
+var bmgame = new BuscaMinas(15, 25, 240);
 
 cellClick = (obj) => {
     if (!bmgame.ended) {
