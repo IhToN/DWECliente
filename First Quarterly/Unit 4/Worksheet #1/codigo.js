@@ -1,6 +1,7 @@
 // 2
 document.addEventListener("click", function (event) {
-    alert('clickaso');
+    if (event.ctrlKey)
+        alert('clickaso');
 }, false);
 
 // 3
@@ -43,13 +44,16 @@ document.getElementById('cleanptr').addEventListener("click", generateCanvas);
 // 9 y 10
 var startListeningDnD = () => {
     document.querySelectorAll('img.dragable').forEach(image => {
-        image.addEventListener("dragstart", function (event) {
-            event.target.style.opacity = '0.4';
+        image.clicked = false;
+        image.addEventListener("click", function (event) {
+            event.target.clicked = event.target.clicked ? false : true;
+            event.target.style.opacity = event.target.clicked ? '0.4' : '1';
         }, false);
-        image.addEventListener("dragend", function (event) {
-            event.target.style.opacity = '1';
-            event.target.style.top = event.screenY + "px";
-            event.target.style.left = event.screenX + "px";
+        image.addEventListener("mousemove", function (event) {
+            if (event.target.clicked) {
+                event.target.style.top = (event.y) + "px";
+                event.target.style.left = (event.x - (event.target.width / 2)) + "px";
+            }
         }, false);
     });
 };
