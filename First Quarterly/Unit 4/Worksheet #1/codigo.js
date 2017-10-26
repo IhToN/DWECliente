@@ -27,13 +27,11 @@ var generateCanvas = () => {
 
 var startListeningCanvas = () => {
     document.querySelectorAll('#pinturillo td').forEach(td => {
-        td.addEventListener("mousemove", function (event) {
+        td.addEventListener("mouseover", function (event) {
             if (event.ctrlKey) event.target.className = '';
             else event.target.className = 'pintado';
         }, false);
     });
-
-    console.log(document.querySelectorAll('#pinturillo td'));
 };
 
 window.addEventListener("load", generateCanvas);
