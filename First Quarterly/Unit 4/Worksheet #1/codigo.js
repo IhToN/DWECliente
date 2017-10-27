@@ -28,10 +28,11 @@ var generateCanvas = () => {
 var startListeningCanvas = () => {
     document.querySelectorAll('#pinturillo td').forEach(td => {
         td.addEventListener("mouseover", function (event) {
-            if(event.ctrlKey && event.shiftKey)  event.target.style.backgroundColor = 'transparent';
+            if (event.ctrlKey && event.shiftKey || event.ctrlKey && event.altKey || event.shiftKey && event.altKey) event.target.style.backgroundColor = 'transparent';
             else if (event.ctrlKey) event.target.style.backgroundColor = 'red';
             else if (event.shiftKey) event.target.style.backgroundColor = 'blue';
-            else  event.target.style.backgroundColor = 'purple';
+            else if (event.altKey) event.target.style.backgroundColor = 'green';
+            else event.target.style.backgroundColor = 'purple';
         }, false);
     });
 };
