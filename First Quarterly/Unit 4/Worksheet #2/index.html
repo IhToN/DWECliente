@@ -2,61 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Worksheet #1</title>
-    <style>
-        body {
-            position: relative;
-        }
-        #pinturillo {
-
-        }
-
-        #pinturillo td {
-            height: 1px;
-            width: 1px;
-        }
-
-        img.dragable {
-            position: absolute;
-        }
-    </style>
+    <title>Worksheet #2</title>
+    <link id="mainstyle" rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
-<pre>
-    1. Captura el evento onClick del ratón para que cada vez que suceda se ejecute un alert.
+<div class="content">
+    <nav>
+        <a class="styleswap" data-theme="style">Tema Normal</a>
+        <a class="styleswap" data-theme="none">Tema '''''Minimalista'''''</a>
 
-    2. Captura el movimiento del ratón, para que se muestre la posición en la que se
-    encuentra en cada momento.
+        <div class="fonts">
+            <a class="fsize" data-action="decrease">A-</a>
+            <a class="fsize" data-action="reset">A</a>
+            <a class="fsize" data-action="increase">A+</a>
+        </div>
 
-    4. Eventos onMouseMove y onLoad. Debemos ser capaces de dibujar con nuestro ratón
-    en dos colores diferentes. Para ello primero simularemos que disponemos de un
-    canvas gráfico: realmente se tratará de una tabla con celdas de pequeño tamaño
-    (100x100 puede valer). Tu programa creará ese canvas una vez cargada la página
-    (onLoad). Lo siguiente será detectar el movimiento del ratón sobre las celdas para
-    pintarlas de un color, el cual será rojo si se mantiene pulsada simultaneamente la
-    tecla Ctrl y azul si se pulsa Shift. En otro caso no deberá pintarse nada.
+        <div class="alignment">
+            <a class="talign" data-action="left">Izquierda</a>
+            <a class="talign" data-action="center">Centro</a>
+            <a class="talign" data-action="right">Derecha</a>
+        </div>
+    </nav>
+    <pre>
+        Se trata de la misma página con 2 estilos diferentes (tema normal y tema minimalista).
+    Haciendo sólo uso de JavaScript consigue que se pueda cambiar el estilo (pulsando los
+        enlaces de la parte superior) para que quede tal cual puedes ver. Deberás hacerlo con dos
+        versiones:
+            a) Modificando el estilo desde JavaScript (las hojas de estilo no estan creadas, sino
+            que se establece mediante atributos del objeto style).
+            b) Creando dos hojas de estilo diferentes que se carguen dinámicamente según la
+            opción pulsada.
 
-    5. Añade las siguientes funcionalidades al ejercicio anterior:
-        ◦ Borrado de lineas con el ratón (mediante la pulsación del botón que tú
-        decidas)
-        ◦ Borrar por completo el canvas (con un botón)
-
-    9. Crea una página web que haciendo uso de eventos permita arrastrar una imagen
-    haciendo uso del ratón (al pulsar sobre la imagen la voy arrastrando hasta que suelto
-    el botón).
-
-    10.Mejora el ejercicio anterior para que se pueda hacer en una página con un número
-    cualquiera de imágenes.
-</pre>
-
-<div id="coords"></div>
-
-<button id="cleanptr">Limpiar el Pinturillo</button>
-<table id="pinturillo"></table>
-
-<img src="https://cdn.mdn.mozilla.net/static/img/web-docs-sprite.22a6a085cf14.svg" class="dragable" />
-<img src="https://images.telepizza.com/vol/es/images/content/productos/pule_t.png" class="dragable" />
-
+        2. Diseña una página web que debe contener texto (mínimo 4 párrafos). Deberás añadir la
+        siguiente funcionalidad mediante JavaScript:
+            • Tamaño de fuente. Debe ser posible incrementar o decrementar la fuente usada, así
+            como volver al tamaño por defecto.
+            • Alineación del texto: Debe ser posible cambiar la alineación a Justificada o a
+            Izquierda.
+    </pre>
+    <strong>Se valorará el correcto diseño mediante funciones independientes para implementar
+        cada una de esas funcionalidades.</strong>
+</div>
 <script type="text/javascript" src="codigo.js"></script>
 </body>
 </html>

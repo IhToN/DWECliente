@@ -1,0 +1,31 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: lightblue;
+}
+
+.content {
+    height: 100%;
+    margin-left: 60px;
+    padding: 25px;
+    background-color: palegoldenrod;
+}
+
+nav {
+    border: 2px solid darkgray;
+    background-color: lightblue;
+    padding: 8px 25px;
+}
+
+nav a {
+    margin-right: 25px;
+}
+
+strong {
+    padding: 25px;
+    border: 2px solid orange;
+}

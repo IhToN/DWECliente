@@ -47,12 +47,12 @@ var startListeningDnD = () => {
     document.querySelectorAll('img.dragable').forEach(image => {
         image.clicked = false;
         image.addEventListener("click", function (event) {
-            event.target.clicked = event.target.clicked ? false : true;
+            event.target.clicked = !event.target.clicked;
             event.target.style.opacity = event.target.clicked ? '0.4' : '1';
         }, false);
         image.addEventListener("mousemove", function (event) {
             if (event.target.clicked) {
-                event.target.style.top = (event.y - (event.target.height / 2)) + "px";
+                event.target.style.top = (event.y + 50) + "px";
                 event.target.style.left = (event.x - (event.target.width / 2)) + "px";
             }
         }, false);
