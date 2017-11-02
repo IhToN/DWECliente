@@ -34,10 +34,10 @@ var saludo = () => {
         bloque.style.color = txtck;
 
         document.getElementById('delete').addEventListener('click', () => {
-            document.cookie = 'username=; path=/; expires=Wed; 01 Jan 1970';
-            document.cookie = 'colorfondo=; path=/; expires=Wed; 01 Jan 1970';
-            document.cookie = 'colorborder=; path=/; expires=Wed; 01 Jan 1970';
-            document.cookie = 'colortext=; path=/; expires=Wed; 01 Jan 1970';
+            document.cookie = 'username=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            document.cookie = 'colorfondo=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            document.cookie = 'colorborder=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            document.cookie = 'colortext=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
             location.reload();
         });
     }
