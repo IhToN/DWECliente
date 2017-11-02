@@ -2,4 +2,4 @@ Original:
 function ([A-Z]*)\w\(([A-Z]*)\)
 
 Replace to:
-var $1 = ($2) =>
+let $1 = ($2) =>
