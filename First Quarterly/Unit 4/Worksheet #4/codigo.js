@@ -1,17 +1,6 @@
 // 1 y 2
 var saludo = () => {
-    let nameck = '';
-    let bgck = '';
-    let bdck = '';
-    let txtck = '';
-    if(document.cookie) {
-        let cookie = document.cookie.split(';');
-        nameck = cookie[0].split('=')[1];
-        bgck = cookie[1].split('=')[1];
-        bdck = cookie[2].split('=')[1];
-        txtck = cookie[3].split('=')[1];
-    }
-    if (!document.cookie || nameck === '') {
+    if (!document.cookie) {
         document.getElementById('submit').addEventListener('click', () => {
             let name = document.getElementById('username');
             let fondo = document.getElementById('colorfondo');
@@ -26,6 +15,11 @@ var saludo = () => {
         });
     } else {
         let bloque = document.getElementById('hello');
+        let cookie = document.cookie.split(';');
+        let nameck = cookie[0].split('=')[1];
+        let bgck = cookie[1].split('=')[1];
+        let bdck = cookie[2].split('=')[1];
+        let txtck = cookie[3].split('=')[1];
 
         bloque.innerHTML = 'Hola <strong>' + nameck + '</strong>!<br/>' +
             '<button id="delete">Borrar Cookie</button>';
