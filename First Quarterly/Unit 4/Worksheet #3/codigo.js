@@ -10,11 +10,11 @@ let comprobarApellido = () => {
     document.getElementById('Apellidos').style.backgroundColor = req.test(apellidos) ? 'lightgreen' : 'pink';
 };
 
-let validateDN = (value) => {
+let validateNIFNIE = (value) => {
 
     let validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
-    let nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
-    let nieRexp = /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+    let nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]{1}$/i;
+    let nieRexp = /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]{1}$/i;
     let str = value.toString().toUpperCase();
 
     if (!nifRexp.test(str) && !nieRexp.test(str)) return false;
