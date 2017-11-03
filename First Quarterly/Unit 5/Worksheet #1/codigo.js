@@ -15,7 +15,36 @@ let addelement = () => {
 document.getElementById("addelement").addEventListener("click", addelement);
 
 // 5
-
+let addimage = () => {
+    let list = document.getElementById('subirimagenes');
+    let newEntry = document.createElement('input');
+    newEntry.type = 'file';
+    newEntry.name = 'imagen[]';
+    newEntry.accept = 'image/*';
+    list.appendChild(newEntry);
+};
+document.getElementById("addimage").addEventListener("click", addimage);
 
 
 // 6
+let images = ["http://place-hoff.com/300/400", "http://place-hoff.com/400/300", "http://place-hoff.com/300/300",
+    "http://place-hoff.com/400/400"];
+let cont = 0;
+
+let previmg = () => {
+    if (cont > 0) {
+        document.getElementById('imgslider').src = images[--cont];
+    }
+};
+let nextimg = () => {
+    if (cont < images.length - 1) {
+        document.getElementById('imgslider').src = images[++cont];
+    }
+};
+
+document.getElementById("imganterior").addEventListener("click", previmg);
+document.getElementById("imgsiguiente").addEventListener("click", nextimg);
+
+window.addEventListener("load", () => {
+    document.getElementById('imgslider').src = images[cont];
+});
