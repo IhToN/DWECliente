@@ -27,8 +27,8 @@ document.getElementById("addimage").addEventListener("click", addimage);
 
 
 // 6
-let images = ["http://place-hoff.com/300/400", "http://place-hoff.com/400/300", "http://place-hoff.com/300/300",
-    "http://place-hoff.com/400/400"];
+let images = ["http://place-hoff.com/300/400", "http://place-hoff.com/350/400", "http://place-hoff.com/400/400",
+    "http://place-hoff.com/450/400"];
 let cont = 0;
 
 let previmg = () => {
