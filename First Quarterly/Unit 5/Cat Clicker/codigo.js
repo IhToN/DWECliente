@@ -1,14 +1,12 @@
 let initCatClicker = () => {
     let catBoxes = document.getElementsByClassName("catbox");
-    let id = 0;
     console.log(catBoxes);
-    Array.prototype.forEach.call(catBoxes, (catbox) => {
+    Array.prototype.forEach.call(catBoxes, (catbox, id) => {
         let imageString = '<img img-id="' + id + '" img-clicks="0" class="catimage" src="http://place-hoff.com/400/400" />';
         let text = '<br/><div class="cattext img' + id + '"></div>';
 
         catbox.innerHTML += imageString;
         catbox.innerHTML += text;
-        id++;
     });
 
     listenEvents();
