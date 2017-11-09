@@ -3,11 +3,24 @@
     <head>
         <meta charset="UTF-8">
         <title>Worksheet #1</title>
+
+        <style type="text/css">
+            .boxes {
+                display: flex;
+                flex-flow: row wrap;
+            }
+
+            .boxes .catbox {
+                flex: 1 0 300px;
+            }
+        </style>
     </head>
     <body>
-        <div class="catbox"></div>
-        <div class="catbox"></div>
-        <div class="catbox"></div>
+        <div class="boxes">
+            <div class="catbox"></div>
+            <div class="catbox"></div>
+            <div class="catbox"></div>
+        </div>
 
         <script type="text/javascript" src="codigo.js"></script>
     </body>
