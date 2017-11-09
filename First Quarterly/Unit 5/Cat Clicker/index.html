@@ -5,22 +5,22 @@
         <title>Worksheet #1</title>
 
         <style type="text/css">
-            .boxes {
+            .catboxes {
                 display: flex;
                 flex-flow: row wrap;
+                justify-content: flex-start;
+                align-items: flex-start;
+                margin-left: -50px;
             }
 
-            .boxes .catbox {
-                flex: 1 0 300px;
+            .catboxes .catbox {
+                flex: 0 0 300px;
+                margin-left: 50px;
             }
         </style>
     </head>
     <body>
-        <div class="boxes">
-            <div class="catbox"></div>
-            <div class="catbox"></div>
-            <div class="catbox"></div>
-        </div>
+        <div class="catboxes" nimages="5"></div>
 
         <script type="text/javascript" src="codigo.js"></script>
     </body>
