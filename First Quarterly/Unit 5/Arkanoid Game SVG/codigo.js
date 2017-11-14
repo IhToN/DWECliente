@@ -9,6 +9,30 @@ class Arkanoid {
     constructor() {
         this.ball = new Ball(this);
         this.player = new Player(this);
+
+        this.drawLives();
+    }
+
+    clearLives() {
+        let lives = canvas.querySelectorAll('.live');
+        Array.prototype.forEach.call(lives, (live) => {
+           canvas.removeChild(live);
+        });
+    }
+
+    drawLives() {
+        for(let i = 1; i <= this.player.lives; i++) {
+            let liveElem = document.createElementNS(svgNS, 'circle');
+            liveElem.setAttribute('class', 'live');
+            liveElem.setAttributeNS(null, 'stroke', 'black');
+            liveElem.setAttributeNS(null, 'fill', 'red');
+            liveElem.setAttributeNS(null, 'stroke-width', 2);
+            liveElem.setAttributeNS(null, 'cx', 15 + i * 5 * 3);
+            liveElem.setAttributeNS(null, 'cy', 15);
+            liveElem.setAttributeNS(null, 'r', 5);
+
+            canvas.appendChild(liveElem);
+        }
     }
 }
 
@@ -41,7 +65,7 @@ class Bar extends Element {
 }
 
 class Ball extends Element {
-    constructor(game, color = 'white', speed = 4, radius = 5) {
+    constructor(game, color = 'white', speed = 4, radius = 8) {
         super(game, 'circle', ((canvasWidth / 2) - (radius / 2)), (canvasHeight - 10 * radius), color);
         this.speed = speed;
         this.radius = radius;
@@ -58,8 +82,15 @@ class Ball extends Element {
     checkBorderCollision() {
         if (this.x >= canvasWidth - this.radius) this.right = false;
         else if (this.x <= this.radius) this.right = true;
-        if (this.y >= canvasHeight - this.radius) this.down = false;
+        if (this.y >= canvasHeight - this.radius) this.bottomCollision();
         else if (this.y <= this.radius) this.down = true;
+    }
+
+    bottomCollision() {
+        this.down = false;
+        this.game.player.lives -= 1;
+        this.game.clearLives();
+        this.game.drawLives();
     }
 
     checkPlayerCollision() {
@@ -72,8 +103,9 @@ class Ball extends Element {
             bndChk.bottom >= bndPlt.top) this.down = false;
     }
 
+
     initMovement() {
-        setInterval(() => {
+        this.movInt = setInterval(() => {
             this.x += (this.right ? this.speed : -this.speed);
             this.y += (this.down ? this.speed : -this.speed);
             this.element.setAttribute('cx', this.x);
