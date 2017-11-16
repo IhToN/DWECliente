@@ -1,37 +1,60 @@
 const svgNS = "http://www.w3.org/2000/svg";
 const FPS = 60;
+const BLOCK_WIDTH = 60;
+const BLOCK_HEIGHT = 15;
+const MAX_ROWS = 15;
 
-const canvas = document.getElementById('arkanoid');
-const canvasWidth = parseInt(canvas.getAttribute('width'));
-const canvasHeight = parseInt(canvas.getAttribute('height'));
+const CANVAS = document.getElementById('arkanoid');
+const CANVAS_WIDTH = parseInt(CANVAS.getAttribute('width'));
+const CANVAS_HEIGHT = parseInt(CANVAS.getAttribute('height'));
 
 class Arkanoid {
     constructor() {
         this.ball = new Ball(this);
         this.player = new Player(this);
+        this.blocks = [];
 
+        this.initBlocks();
         this.drawLives();
     }
 
     clearLives() {
-        let lives = canvas.querySelectorAll('.live');
+        let lives = CANVAS.querySelectorAll('.live');
         Array.prototype.forEach.call(lives, (live) => {
-           canvas.removeChild(live);
+            CANVAS.removeChild(live);
         });
     }
 
     drawLives() {
-        for(let i = 1; i <= this.player.lives; i++) {
+        for (let i = 1; i <= this.player.lives; i++) {
             let liveElem = document.createElementNS(svgNS, 'circle');
             liveElem.setAttribute('class', 'live');
             liveElem.setAttributeNS(null, 'stroke', 'black');
             liveElem.setAttributeNS(null, 'fill', 'red');
             liveElem.setAttributeNS(null, 'stroke-width', 2);
-            liveElem.setAttributeNS(null, 'cx', 15 + i * 5 * 3);
-            liveElem.setAttributeNS(null, 'cy', 15);
-            liveElem.setAttributeNS(null, 'r', 5);
+            liveElem.setAttributeNS(null, 'cx', (15 + i * 5 * 3).toString());
+            liveElem.setAttributeNS(null, 'cy', (CANVAS_HEIGHT - 15).toString());
+            liveElem.setAttributeNS(null, 'r', (5).toString());
 
-            canvas.appendChild(liveElem);
+            CANVAS.appendChild(liveElem);
+        }
+    }
+
+    repaintLives() {
+        this.game.clearLives();
+        this.game.drawLives();
+    }
+
+    initBlocks() {
+        let columns = Math.floor(CANVAS_WIDTH / BLOCK_WIDTH);
+        let rows = Math.floor(CANVAS_HEIGHT / BLOCK_HEIGHT);
+        rows = rows > MAX_ROWS ? MAX_ROWS : rows;
+        let hor_margin = columns / 2;
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                this.blocks.push(new Block(this, hor_margin + j * BLOCK_WIDTH, i * BLOCK_HEIGHT, randomColor, BLOCK_WIDTH, BLOCK_HEIGHT));
+            }
         }
     }
 }
@@ -52,21 +75,31 @@ class Element {
     }
 
     init() {
-        canvas.appendChild(this.element);
+        CANVAS.appendChild(this.element);
     }
 }
 
-class Bar extends Element {
-    constructor(sx, sy, color, width, height) {
-        super('rect', sx, sy, color);
+class Block extends Element {
+    constructor(game, sx, sy, color, width, height) {
+        super(game, 'rect', sx, sy, color);
         this.width = width;
         this.height = height;
+
+        this.element.setAttributeNS(null, 'x', this.x);
+        this.element.setAttributeNS(null, 'y', this.y);
+        this.element.setAttributeNS(null, 'width', this.width);
+        this.element.setAttributeNS(null, 'height', this.height);
+        this.init();
+    }
+
+    remove() {
+        this.element.parentNode.removeChild(this.element);
     }
 }
 
 class Ball extends Element {
     constructor(game, color = 'white', speed = 4, radius = 8) {
-        super(game, 'circle', ((canvasWidth / 2) - (radius / 2)), (canvasHeight - 10 * radius), color);
+        super(game, 'circle', ((CANVAS_WIDTH / 2) - (radius / 2)), (CANVAS_HEIGHT - 10 * radius), color);
         this.speed = speed;
         this.radius = radius;
         this.down = false;
@@ -80,17 +113,15 @@ class Ball extends Element {
     }
 
     checkBorderCollision() {
-        if (this.x >= canvasWidth - this.radius) this.right = false;
+        if (this.x >= CANVAS_WIDTH - this.radius) this.right = false;
         else if (this.x <= this.radius) this.right = true;
-        if (this.y >= canvasHeight - this.radius) this.bottomCollision();
+        if (this.y >= CANVAS_HEIGHT - this.radius) this.bottomCollision();
         else if (this.y <= this.radius) this.down = true;
     }
 
     bottomCollision() {
         this.down = false;
-        this.game.player.lives -= 1;
-        this.game.clearLives();
-        this.game.drawLives();
+        this.game.player.injure();
     }
 
     checkPlayerCollision() {
@@ -103,6 +134,25 @@ class Ball extends Element {
             bndChk.bottom >= bndPlt.top) this.down = false;
     }
 
+    checkBlocksCollision() {
+        this.game.blocks.forEach((block) => {
+            this.checkBlockCollision(block);
+        })
+    }
+
+    checkBlockCollision(block) {
+        let bndPlt = this.element.getBoundingClientRect();
+        let bndChk = block.element.getBoundingClientRect();
+
+        if (bndChk.left <= bndPlt.right &&
+            bndChk.right >= bndPlt.left &&
+            bndChk.top <= bndPlt.bottom &&
+            bndChk.bottom >= bndPlt.top) {
+            this.down = true;
+            block.remove();
+        }
+    }
+
 
     initMovement() {
         this.movInt = setInterval(() => {
@@ -113,13 +163,14 @@ class Ball extends Element {
 
             this.checkBorderCollision();
             this.checkPlayerCollision();
+            this.checkBlocksCollision();
         }, 1000 / FPS)
     }
 }
 
 class Player extends Element {
-    constructor(game, color = 'blue', width = '125', height = '10', lives = 3, speed = 10) {
-        super(game, 'rect', ((canvasWidth / 2) - (width / 2)), (canvasHeight - 5 * height), color);
+    constructor(game, color = 'blue', width = '125', height = '10', lives = 5, speed = 15) {
+        super(game, 'rect', ((CANVAS_WIDTH / 2) - (width / 2)), (CANVAS_HEIGHT - 5 * height), color);
         this.width = width;
         this.height = height;
         this.lives = lives;
@@ -133,7 +184,7 @@ class Player extends Element {
     }
 
     checkRightCollision() {
-        return this.x >= canvasWidth - this.width;
+        return this.x >= CANVAS_WIDTH - this.width;
     }
 
     checkLeftCollision() {
@@ -154,11 +205,26 @@ class Player extends Element {
         this.x += speed;
         this.element.setAttribute('x', this.x);
     }
+
+    injure() {
+        if (this.lives > 1) {
+            this.lives -= 1;
+            this.game.repaintLives();
+        } else {
+            this.death();
+        }
+    }
+
+    death() {
+        console.log("Te has muerto, pero te dejo jugar pa' que te entretengas un rato.")
+    }
 }
 
 window.addEventListener('load', () => {
-    let game = new Arkanoid();
-    window.addEventListener('keydown', (event) => {
-        game.player.moveListener(event);
-    })
+    if (CANVAS) {
+        let game = new Arkanoid();
+        window.addEventListener('keydown', (event) => {
+            game.player.moveListener(event);
+        })
+    }
 });

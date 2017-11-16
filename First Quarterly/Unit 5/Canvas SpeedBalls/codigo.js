@@ -1,4 +1,4 @@
-let canvas = document.getElementById('canvas');
+let canvas = document.getElementById('CANVAS');
 let ancho = parseInt(canvas.getAttribute('width'));
 let alto = parseInt(canvas.getAttribute('height'));
 

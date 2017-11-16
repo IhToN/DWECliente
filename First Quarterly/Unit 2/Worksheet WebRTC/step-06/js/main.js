@@ -328,7 +328,7 @@ function snapAndSend() {
 }
 
 function renderPhoto(data) {
-  var canvas = document.createElement('canvas');
+  var canvas = document.createElement('CANVAS');
   canvas.width = photoContextW;
   canvas.height = photoContextH;
   canvas.classList.add('incomingPhoto');
