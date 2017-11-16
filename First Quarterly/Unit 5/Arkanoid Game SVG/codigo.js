@@ -41,8 +41,8 @@ class Arkanoid {
     }
 
     repaintLives() {
-        this.game.clearLives();
-        this.game.drawLives();
+        this.clearLives();
+        this.drawLives();
     }
 
     initBlocks() {
@@ -52,7 +52,7 @@ class Arkanoid {
         let hor_margin = columns / 2;
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
-                let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                let randomColor = '#' + (Math.random().toString(16) + '000000').slice(2, 8)
                 this.blocks.push(new Block(this, hor_margin + j * BLOCK_WIDTH, i * BLOCK_HEIGHT, randomColor, BLOCK_WIDTH, BLOCK_HEIGHT));
             }
         }
