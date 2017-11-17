@@ -1,8 +1,8 @@
 const svgNS = "http://www.w3.org/2000/svg";
 const FPS = 60;
-const BLOCK_WIDTH = 60;
-const BLOCK_HEIGHT = 15;
-const MAX_ROWS = 15;
+const BLOCK_WIDTH = 120;
+const BLOCK_HEIGHT = 30;
+const MAX_ROWS = 6;
 
 const CANVAS = document.getElementById('arkanoid');
 const CANVAS_WIDTH = parseInt(CANVAS.getAttribute('width'));
@@ -52,6 +52,7 @@ class Arkanoid {
         let hor_margin = columns / 2;
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
+                //if (j % 2 == 0) continue;
                 let randomColor = '#' + (Math.random().toString(16) + '000000').slice(2, 8);
                 this.blocks.push(new Block(this, hor_margin + j * BLOCK_WIDTH, i * BLOCK_HEIGHT, randomColor, BLOCK_WIDTH, BLOCK_HEIGHT));
             }
@@ -98,9 +99,10 @@ class Block extends Element {
 }
 
 class Ball extends Element {
-    constructor(game, color = 'white', speed = 4, radius = 8) {
+    constructor(game, color = 'white', speedx = 4, speedy = 4, radius = 8) {
         super(game, 'circle', ((CANVAS_WIDTH / 2) - (radius / 2)), (CANVAS_HEIGHT - 10 * radius), color);
-        this.speed = speed;
+        this.speedx = speedx;
+        this.speedy = speedy;
         this.radius = radius;
         this.down = false;
         this.right = false;
@@ -127,11 +129,18 @@ class Ball extends Element {
     checkPlayerCollision() {
         let bndPlt = this.element.getBoundingClientRect();
         let bndChk = this.game.player.element.getBoundingClientRect();
+        let division = this.game.player.width / 3;
 
-        if (bndChk.left <= bndPlt.right &&
-            bndChk.right >= bndPlt.left &&
-            bndChk.top <= bndPlt.bottom &&
-            bndChk.bottom >= bndPlt.top) this.down = false;
+        let horCol = bndChk.left <= bndPlt.right &&
+            bndChk.right >= bndPlt.left;
+        let verCol = bndChk.top <= bndPlt.bottom &&
+            bndChk.bottom >= bndPlt.top;
+        if (horCol && verCol) {
+            this.down = false;
+
+            if (bndPlt.left <= bndChk.left + division) this.right = false;
+            else if (bndPlt.right >= bndChk.right - division) this.right = true;
+        }
     }
 
     checkBlocksCollision() {
@@ -144,20 +153,26 @@ class Ball extends Element {
         let bndPlt = this.element.getBoundingClientRect();
         let bndChk = block.element.getBoundingClientRect();
 
-        if (bndChk.left <= bndPlt.right &&
-            bndChk.right >= bndPlt.left &&
-            bndChk.top <= bndPlt.bottom &&
-            bndChk.bottom >= bndPlt.top) {
-            this.down = true;
+        let horCol = bndChk.left <= bndPlt.right &&
+            bndChk.right >= bndPlt.left;
+        let verCol = bndChk.top <= bndPlt.bottom &&
+            bndChk.bottom >= bndPlt.top;
+        if (horCol && verCol) {
             block.remove();
+            //this.right = !this.right;
+            if (bndChk.top <= bndPlt.bottom && bndChk.bottom <= bndPlt.bottom) this.down = true;
+            else if (bndChk.bottom >= bndPlt.top && bndChk.top >= bndPlt.top) this.down = false;
+
+            if (bndPlt.left <= bndChk.right && bndPlt.right >= bndChk.right) this.right = true;
+            else if (bndPlt.right >= bndChk.left && bndPlt.left <= bndChk.left) this.right = false;
         }
     }
 
 
     initMovement() {
         this.movInt = setInterval(() => {
-            this.x += (this.right ? this.speed : -this.speed);
-            this.y += (this.down ? this.speed : -this.speed);
+            this.x += (this.right ? this.speedx : -this.speedx);
+            this.y += (this.down ? this.speedy : -this.speedy);
             this.element.setAttribute('cx', this.x);
             this.element.setAttribute('cy', this.y);
 
@@ -169,18 +184,28 @@ class Ball extends Element {
 }
 
 class Player extends Element {
-    constructor(game, color = 'blue', width = '125', height = '10', lives = 5, speed = 15) {
+    constructor(game, color = 'blue', width = '125', height = '10', lives = 5, speed = 7) {
         super(game, 'rect', ((CANVAS_WIDTH / 2) - (width / 2)), (CANVAS_HEIGHT - 5 * height), color);
         this.width = width;
         this.height = height;
         this.lives = lives;
         this.speed = speed;
+        this.right = false;
+        this.left = false;
 
         this.element.setAttributeNS(null, 'x', this.x);
         this.element.setAttributeNS(null, 'y', this.y);
         this.element.setAttributeNS(null, 'width', this.width);
         this.element.setAttributeNS(null, 'height', this.height);
         this.init();
+        this.initListener();
+    }
+
+    initListener() {
+        this.movInt = setInterval(() => {
+            this.x += (this.right && !this.checkRightCollision() ? this.speed : (this.left && !this.checkLeftCollision() ? -this.speed : 0));
+            this.element.setAttributeNS(null, 'x', this.x);
+        }, 1000 / FPS);
     }
 
     checkRightCollision() {
@@ -191,13 +216,23 @@ class Player extends Element {
         return this.x <= 0;
     }
 
-    moveListener(event) {
-        if (event.keyCode === 37 && !this.checkLeftCollision()) { // left arrow
+    keyDown(event) {
+        if (event.keyCode === 37) { // left arrow
             event.preventDefault();
-            this.movePlayer(-this.speed);
-        } else if (event.keyCode === 39 && !this.checkRightCollision()) { // right arrow
+            this.left = true;
+        } else if (event.keyCode === 39) { // right arrow
             event.preventDefault();
-            this.movePlayer(this.speed);
+            this.right = true;
+        }
+    }
+
+    keyUp(event) {
+        if (event.keyCode === 37) { // left arrow
+            event.preventDefault();
+            this.left = false;
+        } else if (event.keyCode === 39) { // right arrow
+            event.preventDefault();
+            this.right = false;
         }
     }
 
@@ -224,7 +259,10 @@ window.addEventListener('load', () => {
     if (CANVAS) {
         let game = new Arkanoid();
         window.addEventListener('keydown', (event) => {
-            game.player.moveListener(event);
+            game.player.keyDown(event);
+        })
+        window.addEventListener('keyup', (event) => {
+            game.player.keyUp(event);
         })
     }
 });
