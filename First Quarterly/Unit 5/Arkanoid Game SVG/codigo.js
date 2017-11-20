@@ -260,9 +260,9 @@ window.addEventListener('load', () => {
         let game = new Arkanoid();
         window.addEventListener('keydown', (event) => {
             game.player.keyDown(event);
-        })
+        });
         window.addEventListener('keyup', (event) => {
             game.player.keyUp(event);
-        })
+        });
     }
 });
