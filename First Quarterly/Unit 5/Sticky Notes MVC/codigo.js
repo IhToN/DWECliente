@@ -105,7 +105,7 @@ class NoteView {
         this.group.appendChild(rm);
 
         rm.addEventListener('click', () => {
-            this.snotes.deleteNote(this);
+            this.snotes.deleteNote(this.note, this);
         })
     }
 }
@@ -150,8 +150,8 @@ class StickyNotes {
         this.nviewsbox.addNView(nview);
     }
 
-    deleteNote(nview) {
-        this.notesbox.rmNote(nview.note);
+    deleteNote(note, nview) {
+        this.notesbox.rmNote(note);
         this.nviewsbox.rmNView(nview);
     }
 }
