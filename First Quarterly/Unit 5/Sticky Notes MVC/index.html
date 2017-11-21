@@ -2,11 +2,64 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Canvas Game</title>
+        <title>Sticky Notes</title>
+        <link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet"/>
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+            #notespace {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+
+            #notespace .note {
+                font-family: 'Roboto', sans-serif;
+                position: absolute;
+                top: 0;
+                left: 0;
+                min-width: 200px;
+                border: 1px solid #2e2e2e;
+
+                background-color: lightyellow;
+            }
+
+            .note .title {
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .note .title:after {
+                content: "";
+                display: block;
+                width: 100%;
+                border-bottom: 1px solid black;
+            }
+
+            .note .message {
+                padding: 5px 15px;
+            }
+
+            .note .edit {
+                position: absolute;
+                top: 0;
+                left: 5px;
+                width: 12px;
+                height: 12px;
+            }
+
+            .note .delete {
+                position: absolute;
+                top: 0;
+                right: 5px;
+                width: 12px;
+                height: 12px;
+            }
+        </style>
     </head>
     <body style="background-color: #7A7A7A">
-        <svg id="notespace" height="700" width="1100">
-        </svg>
+        <div id="notespace">
+        </div>
 
         <script type="text/javascript" src="codigo.js"></script>
     </body>

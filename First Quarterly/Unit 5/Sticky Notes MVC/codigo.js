@@ -1,8 +1,3 @@
-const SVGNS = "http://www.w3.org/2000/svg";
-const CANVAS = document.getElementById('notespace');
-const CANVAS_WIDTH = parseInt(CANVAS.getAttribute('width'));
-const CANVAS_HEIGHT = parseInt(CANVAS.getAttribute('height'));
-
 /*==========================
     MODEL
 ==========================*/
@@ -39,7 +34,7 @@ class Note {
     }
 }
 
-class StickyNotes {
+class NotesBox {
     constructor() {
         this.notes = [];
     }
@@ -60,92 +55,109 @@ class StickyNotes {
 /*==========================
     VIEW
 ==========================*/
-class SVGRect {
-    constructor(color = 'yellow', startx = 0, starty = 0) {
-        this.color = color;
-        this.x = startx;
-        this.y = starty;
-        this.strokeWidth = 2;
-        this.initSVG();
-    }
-
-    initSVG() {
-        this.element = document.createElementNS(SVGNS, 'rect');
-        this.element.setAttributeNS(null, 'stroke', 'black');
-        this.element.setAttributeNS(null, 'fill', this.color);
-        this.element.setAttributeNS(null, 'x', this.x);
-        this.element.setAttributeNS(null, 'y', this.y);
-        this.element.setAttributeNS(null, 'stroke-width', this.strokeWidth);
-        this.element.setAttributeNS(null, 'width', this.width);
-        this.element.setAttributeNS(null, 'height', this.height);
-        CANVAS.appendChild(this.element);
-    }
-}
-
 class NoteView {
-    constructor(note) {
+    constructor(snotes, note) {
+        this.snotes = snotes;
         this.note = note;
 
         this.initGroup();
     }
 
     initGroup() {
-        this.group = document.createElementNS(SVGNS, 'g');
-        this.group.setAttribute('transform', 'translate(50,50)');
-        this.initRect();
+        this.group = document.createElement('div');
+        this.group.setAttribute('class', 'note');
         this.initTitle();
         this.initMessage();
-        CANVAS.appendChild(this.group);
-    }
-
-    initRect() {
-        let notewidth = '200';
-        let noteheight = '100';
-
-        let notebg = document.createElementNS(SVGNS, 'rect');
-        notebg.setAttributeNS(null, 'x', '0');
-        notebg.setAttributeNS(null, 'y', '0');
-        notebg.setAttributeNS(null, 'width', notewidth);
-        notebg.setAttributeNS(null, 'height', noteheight);
-        notebg.setAttributeNS(null, 'stroke', 'black');
-        notebg.setAttributeNS(null, 'fill', 'yellow');
-        notebg.setAttributeNS(null, 'stroke-width', '1');
-
-        let stroke = document.createElementNS(SVGNS, 'rect');
-        stroke.setAttributeNS(null, 'x', '0');
-        stroke.setAttributeNS(null, 'y', '25');
-        stroke.setAttributeNS(null, 'width', notewidth);
-        stroke.setAttributeNS(null, 'height', '1');
-        stroke.setAttributeNS(null, 'stroke', 'black');
-        stroke.setAttributeNS(null, 'fill', 'yellow');
-        stroke.setAttributeNS(null, 'stroke-width', '1');
-
-
-        this.group.appendChild(notebg);
-        this.group.appendChild(stroke);
+        this.initEdit();
+        this.initDelete();
+        NotesBoxView.CANVAS.appendChild(this.group);
     }
 
     initTitle() {
-        let title = document.createElementNS(SVGNS, 'text');
+        let title = document.createElement('div');
         title.innerHTML = this.note.title;
-        title.setAttributeNS(null, 'x', '10');
-        title.setAttributeNS(null, 'y', '20');
-        title.setAttributeNS(null, 'font-family', 'Verdana');
+        title.setAttribute('class', 'title');
         this.group.appendChild(title);
     }
 
     initMessage() {
-        let message = document.createElementNS(SVGNS, 'text');
+        let message = document.createElement('div');
         message.innerHTML = this.note.message;
-        message.setAttributeNS(null, 'x', '10');
-        message.setAttributeNS(null, 'y', '40');
-        message.setAttributeNS(null, 'font-family', 'Verdana');
-        message.setAttributeNS(null, 'font-size', '12');
+        message.setAttribute('class', 'message');
         this.group.appendChild(message);
+    }
+
+    initEdit() {
+        let rm = document.createElement('div');
+        rm.setAttribute('class', 'edit');
+        rm.innerHTML = '<i class="fa fa-pencil" aria-hidden="true"></i>';
+        this.group.appendChild(rm);
+
+        rm.addEventListener('click', () => {
+            //todo: edit note
+        })
+    }
+
+    initDelete() {
+        let rm = document.createElement('div');
+        rm.setAttribute('class', 'delete');
+        rm.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
+        this.group.appendChild(rm);
+
+        rm.addEventListener('click', () => {
+            this.snotes.deleteNote(this);
+        })
     }
 }
 
+class NotesBoxView {
+    constructor() {
+        this.notes = [];
+    }
+
+    static get CANVAS() {
+        return document.getElementById('notespace');
+    }
+
+    addNView(noteview) {
+        if (noteview instanceof NoteView) {
+            this.notes.push(noteview);
+        }
+    }
+
+    rmNView(noteview) {
+        if (this.notes.includes(noteview)) {
+            this.notes.splice(this.notes.indexOf(noteview), 1);
+            NotesBoxView.CANVAS.removeChild(noteview.group);
+        }
+    }
+}
+
+/*==========================
+    CONTROLLER
+==========================*/
+class StickyNotes {
+    constructor() {
+        this.notesbox = new NotesBox();
+        this.nviewsbox = new NotesBoxView();
+    }
+
+    createNote(title = '', message = '') {
+        let note = new Note(title, message);
+        let nview = new NoteView(this, note);
+
+        this.notesbox.addNote(note);
+        this.nviewsbox.addNView(nview);
+    }
+
+    deleteNote(nview) {
+        this.notesbox.rmNote(nview.note);
+        this.nviewsbox.rmNView(nview);
+    }
+}
+
+
 window.addEventListener('load', () => {
-    let nota = new Note('titulo', 'mensaje');
-    let nview = new NoteView(nota);
+    const snotes = new StickyNotes();
+    snotes.createNote('título', 'mensaje');
 });
