@@ -9,12 +9,14 @@ let Ejercicio3 = (newTitle = undefined) => {
     let images = document.getElementsByTagName('img');
     if (images) {
         document.getElementById('contimg').innerHTML = 'Imágenes totales: ' + images.length;
+        for (let i = 0; i < images.length; i++) document.getElementById('contimg').innerHTML += '<br/>' + images[i].src;
     }
 
     //c
-    setInterval(() => {
+    this.interval = setInterval(() => {
         let curtime = new Date();
         if (!curtime.getSeconds()) {
+            clearInterval(this.interval);
             let link = window.prompt('A dónde quieres ir?', 'https://google.es');
             location.replace(link);
         } else {
