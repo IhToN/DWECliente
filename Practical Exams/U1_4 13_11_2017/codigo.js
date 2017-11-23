@@ -121,7 +121,7 @@ let clear = (evt) => {
     let warn = document.getElementById('aviso');
     if (warn) {
         warn.innerHTML = '';
-        clearTimeout(wtTO);
+        if (wtTO) clearTimeout(wtTO);
     }
 };
 
