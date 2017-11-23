@@ -129,7 +129,7 @@ let warn = () => {
     let warnBox = document.getElementById('aviso');
     if (warnBox) {
         warnBox.innerHTML = 'está escribiendo...';
-        clearTimeout(wtTO);
+        if (wtTO) clearTimeout(wtTO);
         wtTO = setTimeout(() => {
             warnBox.innerHTML = '';
         }, 3 * 1000);
