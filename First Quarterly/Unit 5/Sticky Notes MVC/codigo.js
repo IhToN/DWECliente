@@ -94,7 +94,7 @@ class NoteView {
         this.group.appendChild(rm);
 
         rm.addEventListener('click', () => {
-            //todo: edit note
+            this.snotes.nviewsbox.createForm(this);
         })
     }
 
@@ -113,10 +113,50 @@ class NoteView {
 class NotesBoxView {
     constructor() {
         this.notes = [];
+
+        this.initForm();
+        this.initCreate();
+
     }
 
     static get CANVAS() {
         return document.getElementById('notespace');
+    }
+
+    initCreate() {
+        let createButtons = document.getElementsByClassName('create');
+        Array.prototype.forEach.call(createButtons, (cbut) => {
+            cbut.addEventListener('click', () => {
+                console.log('pepepe');
+                this.createForm();
+            })
+        });
+    }
+
+    initForm() {
+        this.formdiv = document.createElement('div');
+        this.formdiv.setAttribute('class', 'form hidden');
+
+        this.form = document.createElement('form');
+
+        this.ttlinput = document.createElement('input');
+        this.ttlinput.setAttribute('type', 'text');
+        this.ttlinput.setAttribute('placeholder', 'Título');
+
+        this.txtarea = document.createElement('textarea');
+        this.txtarea.setAttribute('rows', '4');
+        this.txtarea.setAttribute('cols', '40');
+        this.txtarea.setAttribute('placeholder', 'Mensaje');
+
+        this.submit = document.createElement('input');
+        this.submit.setAttribute('type', 'button');
+        this.submit.setAttribute('value', 'Crear');
+
+        this.form.appendChild(this.ttlinput);
+        this.form.appendChild(this.txtarea);
+        this.form.appendChild(this.submit);
+        this.formdiv.appendChild(this.form);
+        NotesBoxView.CANVAS.appendChild(this.formdiv);
     }
 
     addNView(noteview) {
@@ -130,6 +170,17 @@ class NotesBoxView {
             this.notes.splice(this.notes.indexOf(noteview), 1);
             NotesBoxView.CANVAS.removeChild(noteview.group);
         }
+    }
+
+    createForm(noteview = undefined) {
+        this.formdiv.setAttribute('class', 'form active');
+        if (noteview) this.createFromNView(noteview);
+        this.submit.setAttribute('value', noteview ? 'Guardar' : 'Crear');
+    }
+
+    createFromNView(noteview) {
+        this.ttlinput.value = noteview.note.title;
+        this.txtarea.value = noteview.note.message;
     }
 }
 
