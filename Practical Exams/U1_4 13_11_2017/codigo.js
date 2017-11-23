@@ -71,7 +71,7 @@ class JaulaGatitos {
     }
 
     buscarGato(nombre = undefined) {
-        if (nombre) for (let gato of this._gatitos) if (gato.nombre === nombre) return gato;
+        if (nombre) for (let gato of this._gatitos) if (gato.nombre === nombre) return gato.caracteristicas();
         return "No lo encuentro";
     }
 
