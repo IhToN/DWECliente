@@ -127,7 +127,6 @@ class NotesBoxView {
         let createButtons = document.getElementsByClassName('create');
         Array.prototype.forEach.call(createButtons, (cbut) => {
             cbut.addEventListener('click', () => {
-                console.log('pepepe');
                 this.createForm();
             })
         });
@@ -174,6 +173,8 @@ class NotesBoxView {
 
     createForm(noteview = undefined) {
         this.formdiv.setAttribute('class', 'form active');
+        this.ttlinput.value = '';
+        this.txtarea.value = '';
         if (noteview) this.createFromNView(noteview);
         this.submit.setAttribute('value', noteview ? 'Guardar' : 'Crear');
     }
