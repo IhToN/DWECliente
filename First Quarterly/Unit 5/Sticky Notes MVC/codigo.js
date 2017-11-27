@@ -35,7 +35,8 @@ class Note {
 }
 
 class NotesBox {
-    constructor() {
+    constructor(snotes) {
+        this.snotes = snotes;
         this.notes = [];
     }
 
@@ -60,17 +61,24 @@ class NoteView {
         this.snotes = snotes;
         this.note = note;
 
+        this.group = document.createElement('div');
         this.initGroup();
     }
 
     initGroup() {
-        this.group = document.createElement('div');
+        this.clearGroup();
         this.group.setAttribute('class', 'note');
         this.initTitle();
         this.initMessage();
         this.initEdit();
         this.initDelete();
         NotesBoxView.CANVAS.appendChild(this.group);
+    }
+
+    clearGroup() {
+        while (this.group.firstChild) {
+            this.group.removeChild(this.group.firstChild);
+        }
     }
 
     initTitle() {
@@ -111,7 +119,8 @@ class NoteView {
 }
 
 class NotesBoxView {
-    constructor() {
+    constructor(snotes) {
+        this.snotes = snotes;
         this.notes = [];
 
         this.initForm();
@@ -134,9 +143,11 @@ class NotesBoxView {
 
     initForm() {
         this.formdiv = document.createElement('div');
-        this.formdiv.setAttribute('class', 'form hidden');
+        this.hideForm();
 
         this.form = document.createElement('form');
+        this.form.setAttribute('method', 'post');
+        this.form.setAttribute('action', '');
 
         this.ttlinput = document.createElement('input');
         this.ttlinput.setAttribute('type', 'text');
@@ -148,7 +159,7 @@ class NotesBoxView {
         this.txtarea.setAttribute('placeholder', 'Mensaje');
 
         this.submit = document.createElement('input');
-        this.submit.setAttribute('type', 'button');
+        this.submit.setAttribute('type', 'submit');
         this.submit.setAttribute('value', 'Crear');
 
         this.form.appendChild(this.ttlinput);
@@ -156,6 +167,10 @@ class NotesBoxView {
         this.form.appendChild(this.submit);
         this.formdiv.appendChild(this.form);
         NotesBoxView.CANVAS.appendChild(this.formdiv);
+    }
+
+    hideForm() {
+        this.formdiv.setAttribute('class', 'form hidden');
     }
 
     addNView(noteview) {
@@ -176,12 +191,43 @@ class NotesBoxView {
         this.ttlinput.value = '';
         this.txtarea.value = '';
         if (noteview) this.createFromNView(noteview);
-        this.submit.setAttribute('value', noteview ? 'Guardar' : 'Crear');
+        else this.createFromEmpty();
+
+    }
+
+    createFromEmpty() {
+        this.submit.setAttribute('value', 'Crear');
+
+        //this.recreateNode(this.form, true);
+        this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.snotes.createNote(this.ttlinput.value, this.txtarea.value);
+            this.hideForm();
+        });
     }
 
     createFromNView(noteview) {
         this.ttlinput.value = noteview.note.title;
         this.txtarea.value = noteview.note.message;
+        this.submit.setAttribute('value', 'Guardar');
+
+        //this.recreateNode(this.form, true);
+        this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.snotes.editNote(noteview, this.ttlinput.value, this.txtarea.value);
+            this.hideForm();
+        });
+    }
+
+    recreateNode(el, withChildren) {
+        if (withChildren) {
+            el.parentNode.replaceChild(el.cloneNode(true), el);
+        }
+        else {
+            let newEl = el.cloneNode(false);
+            while (el.hasChildNodes()) newEl.appendChild(el.firstChild);
+            el.parentNode.replaceChild(newEl, el);
+        }
     }
 }
 
@@ -190,26 +236,49 @@ class NotesBoxView {
 ==========================*/
 class StickyNotes {
     constructor() {
-        this.notesbox = new NotesBox();
-        this.nviewsbox = new NotesBoxView();
+        this.notesbox = new NotesBox(this);
+        this.nviewsbox = new NotesBoxView(this);
     }
 
-    createNote(title = '', message = '') {
-        let note = new Note(title, message);
+    saveNotes() {
+        localStorage.stickyNotes = JSON.stringify(this.notesbox.notes);
+    }
+
+    createNote(title = '', message = '', time = undefined, save = true) {
+        let note = new Note(title, message, time);
         let nview = new NoteView(this, note);
 
         this.notesbox.addNote(note);
         this.nviewsbox.addNView(nview);
+
+        this.saveNotes();
     }
 
     deleteNote(note, nview) {
         this.notesbox.rmNote(note);
         this.nviewsbox.rmNView(nview);
+
+        this.saveNotes();
+    }
+
+    editNote(nview, title = '', message = '') {
+        nview.note.title = title;
+        nview.note.message = message;
+        nview.initGroup();
+
+        this.saveNotes();
+    }
+
+    loadStorage() {
+        if (localStorage.stickyNotes)
+            for (let note of JSON.parse(localStorage.stickyNotes))
+                this.createNote(note._title, note._message, note._time, false);
+
     }
 }
 
 
 window.addEventListener('load', () => {
     const snotes = new StickyNotes();
-    snotes.createNote('título', 'mensaje');
+    snotes.loadStorage();
 });
