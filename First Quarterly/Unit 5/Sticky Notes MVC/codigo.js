@@ -198,7 +198,7 @@ class NotesBoxView {
     createFromEmpty() {
         this.submit.setAttribute('value', 'Crear');
 
-        //this.recreateNode(this.form, true);
+        this.recreateNode(this.form, false);
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             this.snotes.createNote(this.ttlinput.value, this.txtarea.value);
@@ -211,7 +211,7 @@ class NotesBoxView {
         this.txtarea.value = noteview.note.message;
         this.submit.setAttribute('value', 'Guardar');
 
-        //this.recreateNode(this.form, true);
+        this.recreateNode(this.form, false);
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             this.snotes.editNote(noteview, this.ttlinput.value, this.txtarea.value);
@@ -220,14 +220,17 @@ class NotesBoxView {
     }
 
     recreateNode(el, withChildren) {
+        let newEl;
         if (withChildren) {
-            el.parentNode.replaceChild(el.cloneNode(true), el);
+            newEl = el.cloneNode(true);
+            el.parentNode.replaceChild(newEl, el);
         }
         else {
-            let newEl = el.cloneNode(false);
+            newEl = el.cloneNode(false);
             while (el.hasChildNodes()) newEl.appendChild(el.firstChild);
             el.parentNode.replaceChild(newEl, el);
         }
+        this.form = newEl;
     }
 }
 
@@ -273,7 +276,6 @@ class StickyNotes {
         if (localStorage.stickyNotes)
             for (let note of JSON.parse(localStorage.stickyNotes))
                 this.createNote(note._title, note._message, note._time, false);
-
     }
 }
 
