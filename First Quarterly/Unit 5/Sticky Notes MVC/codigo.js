@@ -123,13 +123,49 @@ class NotesBoxView {
         this.snotes = snotes;
         this.notes = [];
 
+        this.clicked = null;
+        this.clx = 0;
+        this.cly = 0;
+
         this.initForm();
         this.initCreate();
-
+        this.startListener();
     }
 
     static get CANVAS() {
         return document.getElementById('notespace');
+    }
+
+    addNView(noteview) {
+        if (noteview instanceof NoteView) {
+            this.notes.push(noteview);
+            noteview.group.addEventListener('mousedown', (event) => {
+                let rect = event.currentTarget.getBoundingClientRect();
+
+                this.clicked = noteview;
+                this.clx = event.clientX - rect.left;
+                this.cly = event.clientY - rect.top;
+            });
+            noteview.group.addEventListener('mouseup', (event) => {
+                this.clicked = null;
+            });
+        }
+    }
+
+    rmNView(noteview) {
+        if (this.notes.includes(noteview)) {
+            this.notes.splice(this.notes.indexOf(noteview), 1);
+            NotesBoxView.CANVAS.removeChild(noteview.group);
+        }
+    }
+
+    startListener() {
+        window.addEventListener('mousemove', (event) => {
+            if (this.clicked) {
+                this.clicked.group.style.top = (event.clientY - this.cly) + "px";
+                this.clicked.group.style.left = (event.clientX - this.clx) + "px";
+            }
+        });
     }
 
     initCreate() {
@@ -173,19 +209,6 @@ class NotesBoxView {
         this.formdiv.setAttribute('class', 'form hidden');
     }
 
-    addNView(noteview) {
-        if (noteview instanceof NoteView) {
-            this.notes.push(noteview);
-        }
-    }
-
-    rmNView(noteview) {
-        if (this.notes.includes(noteview)) {
-            this.notes.splice(this.notes.indexOf(noteview), 1);
-            NotesBoxView.CANVAS.removeChild(noteview.group);
-        }
-    }
-
     createForm(noteview = undefined) {
         this.formdiv.setAttribute('class', 'form active');
         this.ttlinput.value = '';
@@ -198,7 +221,7 @@ class NotesBoxView {
     createFromEmpty() {
         this.submit.setAttribute('value', 'Crear');
 
-        this.recreateNode(this.form, false);
+        this.form = this.recreateNode(this.form, false);
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             this.snotes.createNote(this.ttlinput.value, this.txtarea.value);
@@ -211,7 +234,7 @@ class NotesBoxView {
         this.txtarea.value = noteview.note.message;
         this.submit.setAttribute('value', 'Guardar');
 
-        this.recreateNode(this.form, false);
+        this.form = this.recreateNode(this.form, false);
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             this.snotes.editNote(noteview, this.ttlinput.value, this.txtarea.value);
@@ -230,7 +253,7 @@ class NotesBoxView {
             while (el.hasChildNodes()) newEl.appendChild(el.firstChild);
             el.parentNode.replaceChild(newEl, el);
         }
-        this.form = newEl;
+        return newEl;
     }
 }
 
@@ -254,7 +277,8 @@ class StickyNotes {
         this.notesbox.addNote(note);
         this.nviewsbox.addNView(nview);
 
-        this.saveNotes();
+        if (save)
+            this.saveNotes();
     }
 
     deleteNote(note, nview) {
