@@ -1,0 +1,18 @@
+{
+  "emails": [
+    {
+      "mail": "test@test.com",
+      "name": "A. Palacios",
+      "date": "2017-11-27T00:00:00.000Z",
+      "subject": "Testeando el correo #1",
+      "message": "Lorem ipsum dolor sit amet."
+    },
+    {
+      "mail": "test2@test.com",
+      "name": "A. Musan",
+      "date": "2017-11-28T00:00:00.000Z",
+      "subject": "Testeando el correo #2",
+      "message": "Lorem ipsum dolor sit amet."
+    }
+  ]
+}
