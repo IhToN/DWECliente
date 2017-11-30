@@ -17,7 +17,8 @@
                     let folders = response;
                     let dbxlist = document.getElementById('dbxlist');
                     folders['entries'].forEach((entry) => {
-                        dbxlist.innerHTML += `<li>${entry['.tag']}: ${entry['name']}</li>`
+                        dbxlist.innerHTML += `<li>${entry['.tag']}: ${entry['name']}</li>`;
+                        console.log(entry);
                     });
                 })
                 .catch(function (error) {
