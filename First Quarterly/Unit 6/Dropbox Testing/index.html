@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Dropbox Testing</title>
+    </head>
+    <body>
+        <ul id="dbxlist">
+
+        </ul>
+
+        <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+        <script>
+            var dbx = new Dropbox({accessToken: 'm0vYmIWNlvQAAAAAAAAML22N4bOwVvXZhkOEoMuruyN19ukmNEUbnJwVdHNWrMt_'});
+            dbx.filesListFolder({path: ''})
+                .then(function (response) {
+                    let folders = response;
+                    let dbxlist = document.getElementById('dbxlist');
+                    folders['entries'].forEach((entry) => {
+                        dbxlist.innerHTML += `<li>${entry['.tag']}: ${entry['name']}</li>`
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        </script>
+    </body>
+</html>
