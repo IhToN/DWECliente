@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Worksheet #2</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        4. Vamos a comprobar haciendo uso de AJAX si en un formulario de registro de usuario un
+        nombre está disponible o no. En Por tanto debes:
+        ◦ Crear una página XHTML de registro de usuario en la que el usuario podrá escribir
+        el username que desea. Deberá disponer también de un botón “Comprobar
+        disponibilidad” que debe llamar a una página en PHP en tu servidor., pasándole
+        como parámetro el nombre escogido.
+        ◦ Crear la página PHP que indica si el nombre está disponible o no. En un caso real esa
+        página consultaría una Base de Datos para hacer la comprobación. En nuestro caso
+        por simplicidad, tan sólo generará aleatoriamente una respuesta afirmativa o negativa
+        a la web cliente (enviada en formato XML).
+        ◦ En el cliente debes mostrar al usuario la disponibilidad o no del nombre.
+        4.2. En las aplicaciones reales, cuando un nombre de usuario no está disponible, se ofrecen al
+        ciente varias opciones alternativas. Mejora tu ejercicio anterior para que en caso de
+        considerarse ya ocupado el nombre, se generen varias alternativas que deben enviarse al
+        cliente. La web debe pues mostrar éstas al usuario de modo que pueda escoger una de ellas.
+
+        <div id="regform">
+            <form action="" method="post">
+                <label for="username">Usuario</label><input type="text" name="username" id="username">
+                <label for="pass">Contraseña</label><input type="password" name="pass" id="pass">
+            </form>
+            <div id="error"></div>
+        </div>
+
+        <script type="text/javascript" src="codigo.js"></script>
+    </body>
+</html>
