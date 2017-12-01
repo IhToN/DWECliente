@@ -9,7 +9,7 @@ let loadPosition = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
             position = pos;
-            xhttp.open("GET", `https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}&sensor=true`, false);
+            xhttp.open("GET", `https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}&sensor=true`, true);
             xhttp.send();
         });
     }
@@ -22,13 +22,13 @@ let proccess = () => {
 let update = (json) => {
     let cp = json.results[0].address_components[json.results[0].address_components.length - 1].long_name;
     let citycode = cp.slice(0, 2);
-    xhttp2.open("GET", `https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/${citycode}/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpaHRvbjkzQGdtYWlsLmNvbSIsImp0aSI6ImNiYzkyMWEzLWFiMmItNDkyOS05ZmNjLThmOWRmNmI5NTE4MCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNTEyMTIxMDM0LCJ1c2VySWQiOiJjYmM5MjFhMy1hYjJiLTQ5MjktOWZjYy04ZjlkZjZiOTUxODAiLCJyb2xlIjoiIn0.3ydBNg5lG9OKRep581H5Ekect9n_mZarf5Q7Shj2YWs`, false);
+    xhttp2.open("GET", `https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/${citycode}/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpaHRvbjkzQGdtYWlsLmNvbSIsImp0aSI6ImNiYzkyMWEzLWFiMmItNDkyOS05ZmNjLThmOWRmNmI5NTE4MCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNTEyMTIxMDM0LCJ1c2VySWQiOiJjYmM5MjFhMy1hYjJiLTQ5MjktOWZjYy04ZjlkZjZiOTUxODAiLCJyb2xlIjoiIn0.3ydBNg5lG9OKRep581H5Ekect9n_mZarf5Q7Shj2YWs`, true);
     xhttp2.send();
 };
 
 let getPrdUrl = (json) => {
     console.log(json);
-    xhttp3.open("GET", json.datos, false);
+    xhttp3.open("GET", json.datos, true);
     xhttp3.send();
 };
 
