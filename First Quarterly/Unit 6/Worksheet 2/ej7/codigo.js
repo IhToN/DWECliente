@@ -20,6 +20,7 @@ let proccess = () => {
 };
 
 let update = (json) => {
+    if(!json.results[0]) return;
     let cp = json.results[0].address_components[json.results[0].address_components.length - 1].long_name;
     let citycode = cp.slice(0, 2);
     xhttp2.open("GET", `https://opendata.aemet.es/opendata/api/prediccion/provincia/hoy/${citycode}/?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpaHRvbjkzQGdtYWlsLmNvbSIsImp0aSI6ImNiYzkyMWEzLWFiMmItNDkyOS05ZmNjLThmOWRmNmI5NTE4MCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNTEyMTIxMDM0LCJ1c2VySWQiOiJjYmM5MjFhMy1hYjJiLTQ5MjktOWZjYy04ZjlkZjZiOTUxODAiLCJyb2xlIjoiIn0.3ydBNg5lG9OKRep581H5Ekect9n_mZarf5Q7Shj2YWs`, true);
