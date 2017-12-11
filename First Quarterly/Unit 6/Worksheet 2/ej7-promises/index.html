@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Worksheet #2</title>
+    </head>
+    <body>
+        7. Mejora el ejercicio anterior para hacer uso ahora de las predicciones meteorológicas que
+        ofrece la AEMET. Actualmente se pueden consultar mediante XML las predicciones que
+        genera la Agencia de Meteorología para cada municipio. Por tanto conociendo su código
+        postal, podemos consultar los datos para un municipio (para Granada, es por ejemplo,
+        http://www.aemet.es/xml/municipios/localidad_18087.xml). Por tanto se pide:
+        • Añadir a tu web la posibilidad de consultar el tiempo para el municipio escogido.
+        Para ello recuerda que ya disponías del código postal, de modo que ahora desde tu
+        PHP deberás consultar la URL correspondiente de la AEMET y enviar los datos al
+        cliente (en el formato que tú decidas).
+
+
+        <main>
+            <p>Elige provincia y municipio y se mostrará el código utilizado por el INE para identificar el municipio.</p>
+            <select id="ps-prov"></select>
+            <select id="ps-mun"></select>
+            <h3 id="code"></h3>
+        </main>
+        <pre id="weather">
+        </pre>
+
+        <script type="text/javascript" src="pselect.js"></script>
+        <script type="text/javascript" src="codigo.js"></script>
+    </body>
+</html>
