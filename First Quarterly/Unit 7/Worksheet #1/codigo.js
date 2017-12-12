@@ -6,7 +6,7 @@ $('ul li:first-child').hide(1500);
 // 8
 $('.new .text').css('font-size', '.9em');
 $('.new .title').click(function () {
-    $(this).siblings('.text').toggle(100);
+    $(this).siblings('.text').toggle(1000);
 });
 $('.new').hover(function () {
     $(this).css('background-color', 'gray');
