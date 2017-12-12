@@ -4,7 +4,7 @@ $('ol li:first-child').hide(1500);
 $('ul li:first-child').hide(1500);
 
 // 8
-$('.new .text').css('font-size', '.9em');
+$('.new .text').css({'font-size': '.9em', 'font-family': 'sans-serif'});
 $('.new .title').click(function () {
     $(this).siblings('.text').toggle(1000);
 });
