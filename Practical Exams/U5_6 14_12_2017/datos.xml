@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listaNoticias>
+    <noticia>
+        <titulo>Noticia 1</titulo>
+        <fecha>10/12/2017</fecha>
+        <texto>Contenido noticia 1</texto>
+        <imagen>https://vignette.wikia.nocookie.net/austinally/images/1/14/Random_picture_of_shark.png/revision/latest?cb=20150911004230</imagen>
+    </noticia>
+    <noticia>
+        <titulo>Noticia 2</titulo>
+        <fecha>12/12/2017</fecha>
+        <texto>Contenido noticia 2</texto>
+        <imagen>https://i.imgur.com/MrDX1w3.gif</imagen>
+    </noticia>
+</listaNoticias>
