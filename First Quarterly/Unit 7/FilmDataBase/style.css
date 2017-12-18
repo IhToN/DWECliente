@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Roboto');
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    color: #024457;
+    background: #F2F2F2;
+    font-size: 16px;
+}
+
+h1, h2, h3 {
+    font-family: Merriweather, serif;
+    font-weight: normal;
+    color: #EEE;
+}
+
+h1 span, h2 {
+    color: #6FA8DC;
+}
+
+header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #167F92;
+    padding: 0 2em;
+    position: fixed;
+    width: 96%;
+    z-index: 98;
+}
+
+header > * {
+    flex: 1 0 300px;
+}
+
+.loading {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(200, 200, 200, .5);
+    z-index: 99;
+}
+
+input[type=text] {
+    width: 30%;
+    box-sizing: border-box;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    font-size: 16px;
+    background: white url('https://www.w3schools.com/css/searchicon.png') no-repeat 10px 10px;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    float: right;
+}
+
+input[type=text]:focus {
+    width: 83%;
+}
+
+select {
+    box-sizing: border-box;
+    width: 15%;
+    padding: 12px 20px;
+    border-radius: 4px;
+    background-color: #F1F1F1;
+    border: 2px solid #CCC;
+    margin-left: 1%;
+    float: right;
+}
+
+.content {
+    width: 90%;
+    height: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 100px 15px 0;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 0 3px #212121;-moz-box-shadow: 0 0 3px #212121;box-shadow: 0 0 3px #212121;
+}
+
+.content #results {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-left: -30px;
+}
+
+.content #results .element {
+    flex: 0 0 300px;
+    box-sizing: border-box;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    margin-left: 30px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: relative;
+    z-index: 0
+}
+
+.element img {
+    display: block;
+    width: 100%;
+}
+
+.element .text {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(50, 50, 50, .75);
+    width: 100%;
+    padding: 15px 20px;
+    -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1);
+}
