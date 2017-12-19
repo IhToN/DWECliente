@@ -43,13 +43,13 @@ function styleMovies(jsonSearch, clear = false) {
     if (clear) $('#results').empty();
     if (jsonSearch['Search']) {
         jsonSearch['Search'].forEach((element) => {
-            let eleBox = $('<div class="element"></div>')
+            let eleBox = $(`<a class="element" href="http://www.imdb.com/title/${element['imdbID']}/"></a>`)
                 .append($('<div class="text"></div>')
                     .append($(`<div class="title">${element['Title']} <span class="year">(${element['Year']})</span></div>`))
                 );
 
-            if (element['Poster'] !== 'N/A') eleBox.append($(`<div class="img"><a href="http://www.imdb.com/title/${element['imdbID']}/"><img src="${element['Poster']}" /></a></div>`));
-            else eleBox.append($('<div class="img"><a href="http://www.imdb.com/title/${element[\'imdbID\']}/"><img src="http://www.interlog.com/~tfs/images/posters/TFSMoviePosterUnavailable.jpg" /></a></div>'));
+            if (element['Poster'] !== 'N/A') eleBox.append($(`<div class="img"><img src="${element['Poster']}" /></div>`));
+            else eleBox.append($('<div class="img"><img src="http://www.interlog.com/~tfs/images/posters/TFSMoviePosterUnavailable.jpg" /></div>'));
             $('#results').append(eleBox);
         });
     } else {
