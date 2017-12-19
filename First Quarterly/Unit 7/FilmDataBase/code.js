@@ -28,7 +28,7 @@ function printMovies(terms, type, clear = false) {
     $('.loading').show();
 
     $.ajax({
-        url: "http://www.omdbapi.com/",
+        url: "https://www.omdbapi.com/",
         method: "get",
         data: {"s": terms, "apikey": "91b35794", "type": type, "r": "json", "page": pageToSearch,},
         dataType: "json",
