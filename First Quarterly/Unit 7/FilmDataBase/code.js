@@ -8,9 +8,11 @@ function getMovies() {
     pageToSearch = 1;
     lookingFor = false;
     end = false;
-    printMovies(terms, type, true);
 
     let win = $(window);
+    win.scrollTop(0);
+
+    printMovies(terms, type, true);
     win.scroll(function () {
         // End of the document reached?
         if ($(document).height() - win.height() - 150 <= win.scrollTop()) {
